@@ -1,15 +1,14 @@
-import EditScreenInfo from '@/components/EditScreenInfo'
-import ScreenWrapper from '@/components/ScreenWrapper'
-import React from 'react'
-import { Text } from 'react-native'
+import ScreenWrapper from "@/components/ScreenWrapper";
+import SearchContainer from "@/components/SearchContainer";
+import React from "react";
+import { Text } from "react-native";
 
 const SearchScreen = () => {
   return (
     <ScreenWrapper>
-      <Text>Search</Text>
-      <EditScreenInfo path="app/(tabs)/SearchScreen.tsx" />
+      <SearchContainer />
     </ScreenWrapper>
-  )
-}
+  );
+};
 
-export default SearchScreen
+export default SearchScreen;
