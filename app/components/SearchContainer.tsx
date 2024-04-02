@@ -1,5 +1,7 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { Animated, ScrollView, StyleSheet } from "react-native";
 import PropertyCard from "./PropertyCard";
+import { HEADER_HEIGHT } from "@/constants/Header";
+import AnimatedHeader from "./AnimatedHeader";
 
 export default function SearchContainer() {
   const properties = [
@@ -72,15 +74,31 @@ export default function SearchContainer() {
       tags: ["Pet Friendly", "Parking", "Pool", "Gym"],
     },
   ];
+
+  const scrollY = new Animated.Value(0);
+
   return (
-    <View>
-      <FlatList
-        style={styles.FlatList}
-        data={properties}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <PropertyCard key={item.id} {...item} />}
-      />
-    </View>
+    <>
+      <AnimatedHeader scrollY={scrollY} />
+      <ScrollView
+        style={{
+          flex: 1,
+        }}
+        onScroll={(e) => {
+          scrollY.setValue(e.nativeEvent.contentOffset.y);
+        }}
+        scrollEventThrottle={16}
+        bounces={false}
+        contentContainerStyle={{ paddingTop: HEADER_HEIGHT }}
+      >
+        <Animated.FlatList
+          style={styles.FlatList}
+          data={properties}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <PropertyCard key={item.id} {...item} />}
+        />
+      </ScrollView>
+    </>
   );
 }
 
