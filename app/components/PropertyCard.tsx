@@ -26,7 +26,7 @@ const PropertyCard = (property: PropertyCardProps) => {
     <View style={styles.container}>
       <ImageCarousel images={property.images} />
       <View style={styles.content}>
-        <Row style={styles.header}>
+        <Row style={[styles.header]}>
           <Text category="s1">
             ${property.rentLow.toLocaleString()} - $
             {property.rentHigh.toLocaleString()}
@@ -46,11 +46,7 @@ const PropertyCard = (property: PropertyCardProps) => {
           {property.city},{property.state} {property.zip}
         </Text>
         <Text category="c1">{property.tags.join(", ")}</Text>
-        <Row
-          style={{
-            justifyContent: "space-between",
-          }}
-        >
+        <Row style={[styles.row]}>
           <Button
             onPress={() => console.log("email the property manager")}
             appearance="ghost"
@@ -90,6 +86,9 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "48%",
+  },
+  row: {
+    justifyContent: "space-between",
   },
 });
 

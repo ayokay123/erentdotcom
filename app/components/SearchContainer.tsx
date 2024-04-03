@@ -1,7 +1,9 @@
-import { Animated, FlatList, ScrollView, StyleSheet } from "react-native";
+import { Animated, FlatList, ScrollView, StyleSheet, View } from "react-native";
 import PropertyCard from "./PropertyCard";
-import { HEADER_HEIGHT } from "@/constants/Header";
+import { BASE_HEIGHT, HEADER_HEIGHT } from "@/constants/Header";
 import AnimatedHeader from "./Header/AnimatedHeader";
+import MapView from "react-native-maps";
+import { useState } from "react";
 
 export default function SearchContainer() {
   const properties = [
@@ -74,30 +76,41 @@ export default function SearchContainer() {
       tags: ["Pet Friendly", "Parking", "Pool", "Gym"],
     },
   ];
+  const [mapOpened, setMapOpened] = useState(false);
 
   const scrollY = new Animated.Value(0);
 
   return (
     <>
-      <AnimatedHeader scrollY={scrollY} />
-      <ScrollView
-        style={{
-          flex: 1,
-        }}
-        onScroll={(e) => {
-          scrollY.setValue(e.nativeEvent.contentOffset.y);
-        }}
-        scrollEventThrottle={16}
-        bounces={false}
-        contentContainerStyle={{ paddingTop: HEADER_HEIGHT }}
-      >
-        <FlatList
-          style={styles.FlatList}
-          data={properties}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <PropertyCard key={item.id} {...item} />}
-        />
-      </ScrollView>
+      <AnimatedHeader
+        scrollY={scrollY}
+        setMapOpened={setMapOpened}
+        mapOpened={mapOpened}
+      />
+      {mapOpened ? (
+        <View style={{ flex: 1, overflow: "hidden" }}>
+          <MapView style={{ height: "100%", width: "100%" }} />
+        </View>
+      ) : (
+        <ScrollView
+          style={{
+            flex: 1,
+          }}
+          onScroll={(e) => {
+            scrollY.setValue(e.nativeEvent.contentOffset.y);
+          }}
+          scrollEventThrottle={16}
+          bounces={false}
+          contentContainerStyle={{ paddingTop: BASE_HEIGHT }}
+        >
+          <FlatList
+            style={styles.FlatList}
+            data={properties}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <PropertyCard key={item.id} {...item} />}
+          />
+        </ScrollView>
+      )}
     </>
   );
 }

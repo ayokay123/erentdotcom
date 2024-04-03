@@ -1,6 +1,6 @@
 import { Platform, StatusBar } from "react-native";
 
-const BASE_HEIGHT = 160;
+export const BASE_HEIGHT = 160;
 const iosNotch = 40;
 const iosHeight = BASE_HEIGHT + iosNotch;
 let androidHeight = BASE_HEIGHT;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Row from "../Row";
 import { FontAwesome } from "@expo/vector-icons";
 import { default as theme } from "@/theme.json";
@@ -6,7 +6,40 @@ import { CONTAINER_MARGIN } from "@/constants/Property";
 import { Text } from "@ui-kitten/components";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-const HeaderLogistics = () => {
+const LogisticButton = ({
+  onPress,
+  name,
+  size,
+  color,
+  title,
+}: {
+  onPress: () => void;
+  name: string;
+  size: number;
+  color: string;
+  title: string;
+}) => (
+  <TouchableOpacity onPress={onPress}>
+    <Row style={[styles.defaultMarginRight, styles.row]}>
+      <FontAwesome name={name as any} size={size} color={color} />
+      <Text category="c1" style={[styles.text]}>
+        {title}
+      </Text>
+    </Row>
+  </TouchableOpacity>
+);
+
+const HeaderLogistics = ({
+  setMapOpened,
+  mapOpened,
+}: {
+  setMapOpened: Dispatch<SetStateAction<boolean>>;
+  mapOpened: boolean;
+}) => {
+  const handleMapPress = () => {
+    setMapOpened(!mapOpened);
+  };
+
   return (
     <Row style={[styles.container]}>
       <Row style={[styles.row]}>
@@ -23,30 +56,31 @@ const HeaderLogistics = () => {
         </TouchableOpacity>
       </Row>
       <Row style={[styles.container]}>
-        <TouchableOpacity onPress={() => console.log("sort")}>
-          <Row style={[styles.defaultMarginRight, styles.row]}>
-            <FontAwesome
-              name="sort"
-              size={18}
-              color={theme["color-primary-500"]}
-            />
-            <Text category="c1" style={[styles.text]}>
-              Sort
-            </Text>
-          </Row>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log("Map")}>
-          <Row style={[styles.row]}>
-            <FontAwesome
-              name="map"
-              size={18}
-              color={theme["color-primary-500"]}
-            />
-            <Text category="c1" style={[styles.text]}>
-              Sort
-            </Text>
-          </Row>
-        </TouchableOpacity>
+        <LogisticButton
+          onPress={() => console.log("sort")}
+          name="sort"
+          size={18}
+          color={theme["color-primary-500"]}
+          title="Sort"
+        />
+
+        {mapOpened ? (
+          <LogisticButton
+            name="list"
+            size={18}
+            color={theme["color-primary-500"]}
+            title="List"
+            onPress={handleMapPress}
+          />
+        ) : (
+          <LogisticButton
+            name="map"
+            size={18}
+            color={theme["color-primary-500"]}
+            title="Map"
+            onPress={handleMapPress}
+          />
+        )}
       </Row>
     </Row>
   );
