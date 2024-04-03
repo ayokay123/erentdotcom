@@ -14,7 +14,12 @@ const ScreenWrapper = ({
   style?: ViewStyle;
 }) => {
   return (
-    <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
+    <SafeAreaView style={[styles.container, style]}>
+      <>
+        <StatusBar barStyle={"dark-content"} />
+        {children}
+      </>
+    </SafeAreaView>
   );
 };
 

@@ -1,7 +1,7 @@
-import { Animated, ScrollView, StyleSheet } from "react-native";
+import { Animated, FlatList, ScrollView, StyleSheet } from "react-native";
 import PropertyCard from "./PropertyCard";
 import { HEADER_HEIGHT } from "@/constants/Header";
-import AnimatedHeader from "./AnimatedHeader";
+import AnimatedHeader from "./Header/AnimatedHeader";
 
 export default function SearchContainer() {
   const properties = [
@@ -91,7 +91,7 @@ export default function SearchContainer() {
         bounces={false}
         contentContainerStyle={{ paddingTop: HEADER_HEIGHT }}
       >
-        <Animated.FlatList
+        <FlatList
           style={styles.FlatList}
           data={properties}
           keyExtractor={(item) => item.id.toString()}
