@@ -1,6 +1,6 @@
 import React from "react";
 import { default as theme } from "@/theme.json";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { Button, Text } from "@ui-kitten/components";
 import { FontAwesome } from "@expo/vector-icons";
 import ImageCarousel from "./ImageCarousel";
@@ -21,9 +21,15 @@ interface PropertyCardProps {
   tags: string[];
 }
 
-const PropertyCard = (property: PropertyCardProps) => {
+const PropertyCard = ({
+  property,
+  style,
+}: {
+  property: PropertyCardProps;
+  style?: ViewStyle;
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <ImageCarousel images={property.images} />
       <View style={styles.content}>
         <Row style={[styles.header]}>
